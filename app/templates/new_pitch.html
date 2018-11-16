@@ -1,15 +1,12 @@
+
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
-
-    {%block styles%}
-    {{ super() }}
-    {%endblock%}
-    {% block content %}
-    <div class="container col-md-4">
-        <h3>{{category.pitch}} PITCH</h3>
-        <div class="well">
-            <h3 style=>{{category.category}}</h3>
-            {{wtf.quick_form(pitch_form)}}
-        </div>
-    </div>
-    {% endblock %}
+{%block styles%} {{ super() }}
+<link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+{%endblock%}
+<!-- content block -->
+{% block content %}
+<div class="container">
+  {{wtf.quick_form(pitch_form)}}
+</div>
+{% endblock %}
