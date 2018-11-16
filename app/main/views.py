@@ -7,8 +7,6 @@ from ..models import User,Pitch,Comment
 from .forms import UpdateProfile
 from .. import db,photos
 
-main = mail message
-
 #views
 @main.route('/')
 def index():
