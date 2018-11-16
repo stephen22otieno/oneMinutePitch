@@ -25,7 +25,8 @@ def test():
 
 @manager.shell
 def make_shell_contex():
-    return dict(app=app, db=db, User=User, Role=Role)
+    return dict(app = app,db = db,User = User, Pitch = Pitch, Role = Role, Comments = Comments,Votes= Votes ) 
+
     
 
 migrate = Migrate(app, db)
