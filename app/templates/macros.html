@@ -1,39 +1,31 @@
-{% macro displayPitches(pitches_list) %}
+{% macro displayCategoryList(category_list) %}
+{% for category in category_list %}
 
-{% for pitch in pitches_list %}
-
-<p>{{pitch.pitch}}</p>
-<a href="{{url_for('main.new_comment',id=pitch.id)}}">Add a Comment</a>&nbsp;&nbsp;
-<a href="{{url_for('main.view_comments',id=pitch.id)}}">View Comments</a>&nbsp;&nbsp;
-
-
-{% endfor %}
-{% endmacro%}
-
-{% macro displayPitchesInCategories(pitches,id)%}
-{% for pitch in pitches %}
-{% if pitch.category_id==id%}
-<div class="row">
-    <p>{{pitch.pitch}}</p>
-
+<div>
+  <h2><a href="/category/{{category.id}}"> {{ category.name }} </a></h2>
+  <h4>{{ category.description }}</h4>
 </div>
-{% endif%}
 {% endfor %}
-{% endmacro%}
+{% endmacro %}
 
 
-{% macro displayComments(list_of_comments) %}
-{% for comment in list_of_comments %}
-<div class="row">
-
-    <div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
-        <h4>Author</h4>
-        <p>{{comment.user.username}}</p>
-    </div>
-    <div class="col">
-        <h2> <a href="{{url_for('main.single_comment',id=comment.id)}}">{{comment.pitch_title}}</a> </h2>
-    </div>
+{% macro displayPitches(pitch_list) %}
+{% for pitches in pitch_list %}
+<div >
+  <ul >
+    <li>
+      <h3><a  class="text-grey" href="/pitch/{{pitches.id}}">{{pitches.content|truncate(250)}}</a>
+        <span><small>Posted at:{{pitches.date_posted.strftime('%Y/%m/%d %r')}}</small></span></h3>
+    </li>
+  </ul>
 </div>
+{% endfor %}
+{% endmacro %}
 
+{% macro displaySpecificPitch(specific_pitch_list) %}
+ {% for comment in specific_pitch_list %}
+<div>
+  <hr> {{comment.comment_section_id}}
+</div>
 {% endfor %}
 {% endmacro %}

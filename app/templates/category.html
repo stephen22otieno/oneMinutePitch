@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro%}
+   {%block styles%}
+   {{ super() }}
+  <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">{%endblock%}
+
+  <!-- content block -->
+  {% block content %}
+  <h3>Make your one minute count. <small> <i>Click pitch to comment</i></small></h3>
+  <hr>
+  {% if pitches %} {{ macro.displayPitches(pitches)}} {%else%}
+  <h4>This Category has no Pitch</h4>
+  {% endif %}
