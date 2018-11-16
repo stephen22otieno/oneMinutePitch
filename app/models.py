@@ -98,7 +98,7 @@ class Interview(db.Model):
 
     @classmethod
     def get_votes(cls,user_id,pitch_id):
-        votes = Vote.query.filter_by(user_id=user_id,pitch_id=pitch_id).all()
+        interview = interveiw.query.filter_by(user_id=user_id,pitch_id=pitch_id).all()
         return votes
 
     @classmethod
@@ -108,25 +108,7 @@ class Interview(db.Model):
         votes_list = sum([i[0] for i in found_votes.all()])
         return votes_list
 
-class PitchCategory(db.Model):
 
-    __tablename__ = 'categories'
-
-    # table columns
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
-    description = db.Column(db.String(255))
-
-
-    # save pitches
-    def save_category(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @classmethod
-    def get_categories(cls):
-        categories = PitchCategory.query.all()
-        return categories
 
 class Pitch(db.Model):
     __tablename__ = 'pitches'
