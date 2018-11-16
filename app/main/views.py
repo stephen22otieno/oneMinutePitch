@@ -1,13 +1,13 @@
 from flask import render_template,request,redirect,url_for,abort
-from . import *
-from .forms import *
+from . import main
+from .forms import LoginForm
 from flask_login import login_required, current_user
 from .. import auth
 from ..models import User,Pitch,Comment
 from .forms import UpdateProfile
 from .. import db,photos
 
-
+main = mail message
 
 #views
 @main.route('/')
