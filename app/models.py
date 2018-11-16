@@ -47,15 +47,6 @@ class User(UserMixin, db.Model):
     def verify_password(self,password):
         return check_password_hash(self.password_hash,password)
 
-    
-    @staticmethod
-    def verify_reset_password(token):
-        try:
-            id = jwt.decode(token, os.environ.get('SECRET_KEY'),algorithms=['HS256'])['reset_password']
-        except:
-            return
-        return User.query.get(id)
-
 
     def __repr__(self):
         return f'User {self.username}'
