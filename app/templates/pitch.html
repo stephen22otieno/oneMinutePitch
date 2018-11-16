@@ -1,16 +1,19 @@
-{% extends 'base.html'%}
-{% import 'macros.html' as macro%}
+{% extends 'base.html' %}
+ {% import 'macros.html' as macro%}
+  {%block styles%}
+   {{ super() }}
+<link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+{%endblock%}
 
+<!-- content block -->
 {% block content %}
 <div class="container">
-    <div class="row">
-        <h1>Comments </h1>
-        {% if pitch_comments %}
-        {{ macro.displayComments(pitch_comments) }}
-        {% else%}
-        <h3 class="text-center"> comments </h3>
-        {% endif %}
-    </div>
-</div>
-{% endblock %}
-
+  <h3> Pitch:<i>{{pitches.content}}</i></h3>
+  <h4>Comments:</h4>
+  {% if comment %}
+  {{ macro.displaySpecificPitch(comment)}}
+  <hr> {%else%}
+  <h3 class="text-center">No comment </h3>
+  {% endif %}
+  <p class="text-right"><a class="btn btn-primary" href="/pitch/new/{{pitches.id}}">Add a comment</a></p>
+</div>{% endblock %}
