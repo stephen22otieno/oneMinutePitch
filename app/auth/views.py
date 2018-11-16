@@ -8,6 +8,7 @@ from .forms import LoginForm
 from flask_login import login_user, logout_user, login_required
 from .email import mail_message
 
+mian = mail_message
 @auth.route('/logout')
 @login_required
 def logout():
