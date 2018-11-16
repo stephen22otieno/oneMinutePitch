@@ -83,15 +83,15 @@ class Comment(db.Model):
         comments=Comment.query.order_by(Comment.time_posted.desc()).filter_by(pitches_id=id).all()
         return comments
 
-class Vote(db.Model):
-    __tablename__ = 'votes'
+class Interview(db.Model):
+    __tablename__ = 'interview'
     id = db.Column(db.Integer, primary_key=True)
     vote = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     pitch_id = db.Column(db.Integer, db.ForeignKey("pitches.id"))
     vote_number = db.Column(db.Integer)
 
-    def save_vote(self):
+    def save_interview(self):
         db.session.add(self)
         db.session.commit()
 
@@ -158,3 +158,4 @@ class Pitch(db.Model):
     def get_category(cls,cat):
         category = Pitch.query.filter_by(pitch_category=cat).order_by('-id').all()
         return category
+
