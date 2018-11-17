@@ -1,124 +1,95 @@
-from flask import render_template,request,redirect,url_for,abort
-from . import *
-from .forms import *
+from flask import render_template,redirect,url_for,abort
+from . import main
+from ..models import Category, User,Peptalk, Comments
+from .. import db
 from flask_login import login_required, current_user
-from .. import auth
-from ..models import User,Pitch,Comment
-from .forms import UpdateProfile
-from .. import db,photos
+from .forms import PeptalkForm,CommentForm
 
-#views
+# Views
 @main.route('/')
 def index():
+
     '''
-    View root page function that returns index page and its data
+    View root page function that returns the index page and its data
     '''
-    title = 'PITCH PERFECT'
+    categories = Category.get_categories()
+    title = 'Home - Welcome to One Minute Pitch'
+    return render_template('index.html', title = title, categories = categories)
 
-    index=Pitch.query.all()
+@main.route('/category/<int:id>')
+def category(id):
+    '''
+    category route function returns a list of pitches chosen and allows users to create a new pitch
+    '''
 
-    return render_template('index.html', title = title, index = index)   
+    category = Category.query.get(id)
 
-@main.route('/new_pitch', methods = ['GET','POST'])
-@login_required
-def new_pitch():   
-    form = PitchForm() 
-    if form.validate_on_submit():
-        pitch = Pitch(post=form.post.data,body=form.body.data,category=form.category.data)
-        pitch.save_pitch()
-        return redirect(url_for('main.index'))
-    return render_template('new_pitch.html',form=form) 
-
-@main.route('/product', methods = ['GET','POST'])
-
-def product():
-
-    product_pitches=Pitch.query.filter_by(category="PRODUCT")
-
-    
-
-    return render_template('product.html', product_pitches = product_pitches )
-
-@main.route('/interview', methods = ['GET','POST'])
-
-def interview():
-
-    interview_pitches=Pitch.query.filter_by(category="INTERVIEW")
-   
-    return render_template('interview.html', interview_pitches = interview_pitches)    
-
-
-
-@main.route('/promotion', methods = ['GET','POST'])
-
-def promotion():
-
-    promotion_pitches=Pitch.query.filter_by(category="PROMOTION")
-   
-    return render_template('promotion.html', promotion_pitches = promotion_pitches)
-
-@main.route('/pitch', methods = ['GET','POST'])
-
-def pitch():
-
-    pitches_interview=Pitch.query.filter_by(category="PICK-UP")
-   
-    return render_template('pitch.html',pitches_interview=pitches_interview)
-
-
-
-
-@main.route('/comment/<int:id>', methods = ['GET','POST'])
-@login_required
-def new_comment(id):   
-    fom = CommentForm()
-    pitch = Pitch.query.get(id)
-    if fom.validate_on_submit():
-        comment = Comment(poster=fom.poster.data,comment=fom.comment.data, pitch=pitch)
-        db.session.add(comment)
-        db.session.commit()
-    comm = Comment.query.filter_by(pitch=pitch).all()
-    return render_template('comment.html',comm=comm,fom=fom)
-    
-
-@main.route('/user/<uname>')
-def profile(uname):
-    user = User.query.filter_by(username = uname).first()
-
-    if user is None:
+    if category is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)
+    pitches = Peptalk.get_pitches(id)
+    title = "Pitches"
+    return render_template('category.html', title = title, category = category,pitches = pitches)
 
-
-@main.route('/user/<uname>/update',methods = ['GET','POST'])
+# Dynamic routing for pitches
+@main.route('/category/pitch/new/<int:id>', methods = ['GET','POST'])
 @login_required
-def update_profile(uname):
-    user = User.query.filter_by(username = uname).first()
-    if user is None:
+def new_pitch(id):
+    '''
+    Function to check Pitches form
+    '''
+    form = PeptalkForm()
+    category = Category.query.filter_by(id=id).first()
+
+    if category is None:
         abort(404)
 
-    form = UpdateProfile()
+    if form.validate_on_submit():
+        content = form.content.data
+        # user = current_user._get_current_object()
+        new_pitch = Peptalk(content=content,user_id=current_user.id,category_id=category.id)
+        new_pitch.save_pitch()
+        return redirect(url_for('.category', id = category.id))
+
+    title = 'New pitch'
+    return render_template('new_pitches.html', title = title, pitch_form = form)
+
+# Dynamic routing for one pitch
+@main.route('/pitch/<int:id>', methods = ['GET','POST'])
+@login_required
+def single_pitch(id):
+    '''
+    Function the returns a single pitch for comment to be added
+    '''
+
+    pitches = Peptalk.query.get(id)
+
+    if pitches is None:
+        abort(404)
+
+    comment = Comments.get_comments(id)
+    title = 'Comment Section'
+    return render_template('pitch.html', title = title, pitches = pitches, comment = comment)
+
+
+# Dynamic routing for comment section
+@main.route('/pitch/new/<int:id>', methods = ['GET','POST'])
+@login_required
+def new_comment(id):
+    '''
+    Function that returns a list of comments for the particular pitch
+    '''
+    form = CommentForm()
+    pitches = Peptalk.query.filter_by(id=id).first()
+
+    if pitches is None:
+        abort(404)
 
     if form.validate_on_submit():
-        user.bio = form.bio.data
+        comment_section_id = form.comment_section_id.data
+        new_comment = Comments(comment_section_id=comment_section_id,user_id=current_user.id,pitches_id=pitches.id)
+        new_comment.save_comment()
+        return redirect(url_for('.category', id = pitches.id))
 
-        db.session.add(user)
-        db.session.commit()
-
-        return redirect(url_for('.profile',uname=user.username))
-
-    return render_template('profile/update.html',form =form)
-
-
-
-@main.route('/user/<uname>/update/pic',methods= ['POST'])
-@login_required
-def update_pic(uname):
-    user = User.query.filter_by(username = uname).first()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        user.profile_pic_path = path
-        db.session.commit()
-    return redirect(url_for('main.profile',uname=uname))
+    title = 'New Comment'
+    return render_template('comments.html', title = title, comment_form = form)
