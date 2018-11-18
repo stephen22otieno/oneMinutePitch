@@ -25,11 +25,5 @@ def test():
 def make_shell_contex():
         return dict(app = app, db = db, Category = Category, User = User, Peptalk = Peptalk, Comments = Comments)
 
-
-
-
-migrate = Migrate(app, db)
-manager.add_command('db', MigrateCommand)
-
 if __name__ == '__main__':
     manager.run()

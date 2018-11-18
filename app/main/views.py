@@ -16,7 +16,6 @@ def index():
     title = 'Home - Welcome to One Minute Pitch'
     return render_template('index.html', title = title, categories = categories)
 
-
 @main.route('/category/<int:id>')
 def category(id):
     '''
