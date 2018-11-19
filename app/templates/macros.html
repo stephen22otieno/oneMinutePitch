@@ -2,7 +2,7 @@
 {% for category in category_list %}
 
 <div>
-  <h2><a href="/category/{{category.id}}">resrdtfgy</a></h2>
+  <h2><a href="/category/{{category.id}}">Category</a></h2>
   <h4>{{ category.description }}</h4>
 </div>
 {% endfor %}
@@ -14,7 +14,7 @@
 <div >
   <ul >
     <li>
-      <h3><a  class="text-grey" href="/pitch/{{pitches.id}}">{{pitches.content|truncate(250)}}</a>
+      <h3><a  class="text-grey" href="/pitch/{{pitches.id}}">{{pitches.content|truncate(30)}}</a>
         <span><small>Posted at:{{pitches.date_posted.strftime('%Y/%m/%d %r')}}</small></span></h3>
     </li>
   </ul>

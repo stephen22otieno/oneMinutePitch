@@ -6,7 +6,7 @@
    <meta charset="utf-8"> {% if title %}
    <title> {{ title }}</title>
    {% else %}
-   <title> ONE MINUTE PITCH </title>
+   <title> MINUTE PITCH </title>
    {% endif %}
    <link href="https://fonts.googleapis.com/css?family=Lobster%7CNoto+Sans+SC" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css?family=Lobster%7CNoto+Sans+SC%7CPacifico" rel="stylesheet"></head>
@@ -26,22 +26,29 @@
        <H1 style="font-family: 'Pacifico', cursive;text-align: center; color: #3A005C;"> WELCOME  TO MY PITCH WEBSITE</H1>
 
    </div>
+   <!-- <div class="jumbotron"> -->
    <div class="container" style="background-color: rgb(235, 230, 160);">
+
        <h3 style="text-align:center">View and Pitch ideas </h3>
+
        <nav class="navbar navbar-default" role="navigation" style="text-align:center;">
 
            <!-- Collect the nav links, forms, and other content for toggling -->
-           <div class="collapse navbar-collapse navbar-ex1-collapse" id="pro">
-               <ul class="nav navbar-nav">
+           <div class="collapse navbar-collapse navbar-collapse" id="pro">
+               <ul class="nav navbar-nav-navbar-right">
                    <li style="padding-right:150px; color:green;"><a href="/pitch">Category</a></li>
+                   <hr>
                    <li style="padding-right:150px; color:green;"><a href="/product">single_pitch</a></li>
+                   <hr>
                    <li style="padding-right:150px; color:green"><a href="/interview">Pitches</a></li>
+                   <hr>
                    <li style="padding-right:150px; color:green"><a href="/promotion">Comment</a></li>
+                   <hr>
 
                </ul>
            </div>
        </nav>
-
+  <button type="button" id="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" class="btn btn-primary" style"text-align:center;">SEE</button>
 
 
        {% for prodo in index %}

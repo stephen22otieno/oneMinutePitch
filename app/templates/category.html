@@ -4,6 +4,20 @@
    {{ super() }}
   <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">{%endblock%}
 
+  <nav class="navbar navbar-default" role="navigation" style="text-align:center;">
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse" id="pro">
+          <ul class="nav navbar-nav">
+              <li style="padding-right:150px; color:green;"><a href="/pitch">Category</a></li>
+              <li style="padding-right:150px; color:green;"><a href="/product">single_pitch</a></li>
+              <li style="padding-right:150px; color:green"><a href="/interview">Pitches</a></li>
+              <li style="padding-right:150px; color:green"><a href="/promotion">Comment</a></li>
+
+          </ul>
+      </div>
+  </nav>
+
   <!-- content block -->
   {% block content %}
   <h3>Make your one minute count. <small> <i>Click pitch to comment</i></small></h3>
