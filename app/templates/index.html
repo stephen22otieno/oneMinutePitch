@@ -1,15 +1,75 @@
-{% extends 'base.html'%}
-{% import 'macros.html' as macro%}
+<!DOCTYPE html>
 
-{% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
+<html>
 
-            {{ macro.displayPitches(pitches) }}
+<head>
+   <meta charset="utf-8"> {% if title %}
+   <title> {{ title }}</title>
+   {% else %}
+   <title> ONE MINUTE PITCH </title>
+   {% endif %}
+   <link href="https://fonts.googleapis.com/css?family=Lobster%7CNoto+Sans+SC" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Lobster%7CNoto+Sans+SC%7CPacifico" rel="stylesheet"></head>
+{% extends 'base.html'%} {% import 'macros.html' as macro%}{% import "bootstrap/wtf.html" as wtf %}
 
-        </div>
-    </div>
+<body>
 
-</div>
-{%endblock%}
+       {% block styles%}
+       {{ super() }}
+       <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+       {% endblock %}
+
+
+   {% block content %}
+
+   <div class="well">
+       <H1 style="font-family: 'Pacifico', cursive;text-align: center; color: #3A005C;"> WELCOME  TO MY PITCH WEBSITE</H1>
+
+   </div>
+   <div class="container" style="background-color: rgb(235, 230, 160);">
+       <h3 style="text-align:center">View and Pitch ideas </h3>
+       <nav class="navbar navbar-default" role="navigation" style="text-align:center;">
+
+           <!-- Collect the nav links, forms, and other content for toggling -->
+           <div class="collapse navbar-collapse navbar-ex1-collapse" id="pro">
+               <ul class="nav navbar-nav">
+                   <li style="padding-right:150px; color:green;"><a href="/pitch">Category</a></li>
+                   <li style="padding-right:150px; color:green;"><a href="/product">single_pitch</a></li>
+                   <li style="padding-right:150px; color:green"><a href="/interview">Pitches</a></li>
+                   <li style="padding-right:150px; color:green"><a href="/promotion">Comment</a></li>
+
+               </ul>
+           </div>
+       </nav>
+
+
+
+       {% for prodo in index %}
+       <div class="panel panel-success panel-heading" style="text-align:center;">
+           <ol>
+               <h3>Category: {{prodo.category}}</h3>
+               <H3 style="font-family: 'Lobster', cursive;">{{prodo.body}}</H3>
+               <p>By:{{prodo.post}}</p>
+               <p>{{prodo.date_posted}}</p>
+               <a href="/comment/4">comment</a>
+
+               <h3>Comments</h3>
+          {% for comment in comm %}
+          {{comment.poster}}
+          By:{{ comment.comment }}
+
+          {% endfor %}
+
+           </ol>
+       </div>
+
+
+
+
+       {% endfor %}
+   </div>
+
+   {% endblock%}
+</body>
+
+</html>
