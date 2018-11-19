@@ -6,7 +6,7 @@ from flask_login import login_required, current_user
 from .forms import PeptalkForm,CommentForm
 
 # Views
-@login_required
+
 @main.route('/')
 def index():
 

@@ -13,6 +13,10 @@ from  ..email import mail_message
 @auth.route('/login', methods=['GET','POST'])
 def login():
     login_form = LoginForm()
+    if login_form.validate_on_submit():
+        user = User(email=login_form.email.data, password=login_form.password.data)
+        # login_form.email.remember.data
+        return redirect(url_for('main.index'))
 
     # if login_form.validate_on_submit():
     #     user = u
