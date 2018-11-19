@@ -6,6 +6,7 @@ from flask_login import login_required, current_user
 from .forms import PeptalkForm,CommentForm
 
 # Views
+@login_required
 @main.route('/')
 def index():
 
@@ -13,6 +14,7 @@ def index():
     View root page function that returns the index page and its data
     '''
     categories = Category.get_categories()
+
     title = 'Home - Welcome to One Minute Pitch'
     return render_template('index.html', title = title, categories = categories)
 
