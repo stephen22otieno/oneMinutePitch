@@ -1,33 +1,43 @@
-{% extends 'auth/auth-base.html'%}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+
 {% block content %}
-
-
 <div class="container">
-  <div class="row">
+    <div class="row">
+      <div class= "col-md-2"> </div>
+      <div class="col-md-8">
+          <style>
+              @import url('https://fonts.googleapis.com/css?family=Srisakdi');
+                h2{            display: block;
+                      font-famil:italic;
+                      color: #360a70cc;
+                      font-size: 40px;
+                      font-weight: 1000;
+                      text-align: left;
+                    }
+                    ul {
+                      font-family: 'Srisakdi',  Georgia;
+                    }
+                    body{
+                      background-image: url('../static/css/photo/abstract-background-blur-255379.jpg')
+                    }
+              </style> 
+      <!--Flash message -->
 
-    <div class="col-md-2"> </div>
-
-    <div class="col-md-8">
-      <!-- Flash message -->
       {% for message in get_flashed_messages() %}
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message }}
-      </div>
-
+        <div class="alert alert-danger">
+        <button type="button" class="close" info-dismiss="alert">&times;</button>
+        {{ message }}
+        </div>
       {% endfor %}
-      <!-- Login form  -->
 
-      {{ wtf.quick_form(login_form) }}
+      <!-- Login form -->
 
+      {{wtf.quick_form(login_form)}}
       <p> Don't have an account? <a href="{{url_for('auth.register')}}">Sign up here</a></p>
-
+     </div>
+     <div clas="col-md-2"> </div>
     </div>
-
-    <div class="col-md-2"> </div>
-
-  </div>
 </div>
 
-
-{%endblock%}
+{% endblock%}

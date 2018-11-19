@@ -2,6 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import login_manager
+from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 
 @login_manager.user_loader
@@ -12,12 +13,14 @@ class Category(db.Model):
     '''
     Category class define category per pitch
     '''
-    __tablename__ = 'categories'
+    __tablename__ = 'category'
 
     # add columns
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(255))
     description = db.Column(db.String(255))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    # category = relationship("Category", back_populates="user")
 
     # save
     def save_category(self):
@@ -43,14 +46,12 @@ class Peptalk(db.Model):
     """
     all_pitches = []
 
-    __tablename__ = 'pitches'
-
     id = db.Column(db.Integer,primary_key = True)
     content = db.Column(db.String)
     date_posted = db.Column(db.DateTime,default=datetime.now)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    category_id = db.Column(db.Integer,db.ForeignKey("categories.id"))
-    comment = db.relationship("Comments", backref="peptalk", lazy = "dynamic")
+    # category_id = db.Column(db.Integer,db.ForeignKey("categories.id"))
+    # comment = db.relationship("Comments", backref="peptalk", lazy = "dynamic")
 
 
 
@@ -118,7 +119,7 @@ class Comments(db.Model):
     comment_section_id = db.Column(db.String(255))
     date_posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    pitches_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+    # pitches_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
 
     def save_comment(self):
         '''
