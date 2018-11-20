@@ -36,19 +36,19 @@
            <!-- Collect the nav links, forms, and other content for toggling -->
            <div class="collapse navbar-collapse navbar-collapse" id="pro">
                <ul class="nav navbar-nav-navbar-right">
-                   <li style="padding-right:150px; color:green;"><a href="/pitch">Category</a></li>
+                   <li style="padding-right:150px; color:green;"><a href="/category">Category</a></li>
                    <hr>
-                   <li style="padding-right:150px; color:green;"><a href="/product">single_pitch</a></li>
+                   <li style="padding-right:150px; color:green;"><a href="/Single_pitch">single_pitch</a></li>
                    <hr>
-                   <li style="padding-right:150px; color:green"><a href="/interview">Pitches</a></li>
+                   <li style="padding-right:150px; color:green"><a href="/pitches">Pitches</a></li>
                    <hr>
-                   <li style="padding-right:150px; color:green"><a href="/promotion">Comment</a></li>
+                   <li style="padding-right:150px; color:green"><a href="/Comment">Comment</a></li>
                    <hr>
 
                </ul>
            </div>
        </nav>
-  <button type="button" id="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" class="btn btn-primary" style"text-align:center;">SEE</button>
+  <button type="button" id="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" class="btn btn-primary" style"text-align:center;">VIEW</button>
 
 
        {% for prodo in index %}
@@ -58,7 +58,7 @@
                <H3 style="font-family: 'Lobster', cursive;">{{prodo.body}}</H3>
                <p>By:{{prodo.post}}</p>
                <p>{{prodo.date_posted}}</p>
-               <a href="/comment/4">comment</a>
+               <a href="/comment/5">comment</a>
 
                <h3>Comments</h3>
           {% for comment in comm %}
